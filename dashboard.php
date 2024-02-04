@@ -16,7 +16,6 @@ $error = null;
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['file'])) {
     try {
         $fileHandler->upload($_FILES['file'], $userId);
-        // Additional success handling if needed
     } catch (Exception $e) {
         echo "Error: " . $e->getMessage();
     }
@@ -81,7 +80,6 @@ if (isset($_SESSION['error'])) {
         </div>
     <?php endif; ?>
 
-    <!-- Add this code before the file list -->
     <div class="container mt-3">
         <form method="get" action="">
             <div class="input-group mb-3">
@@ -114,7 +112,6 @@ if (isset($_SESSION['error'])) {
                                     <path d="M 7.71875 6.28125 L 6.28125 7.71875 L 23.5625 25 L 6.28125 42.28125 L 7.71875 43.71875 L 25 26.4375 L 42.28125 43.71875 L 43.71875 42.28125 L 26.4375 25 L 43.71875 7.71875 L 42.28125 6.28125 L 25 23.5625 Z"></path>
                                 </svg></a>
 
-                            <!-- Add the Rename button -->
                             <button class="btn btn-sm" data-bs-toggle="modal" data-bs-target="#renameModal<?php echo $file['id']; ?>">
                                 <img width="22" height="22" src="https://img.icons8.com/windows/32/edit-file.png" alt="edit-file" />
                             </button>
