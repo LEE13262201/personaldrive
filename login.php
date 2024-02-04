@@ -124,7 +124,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 if (passwordInput.type === 'password') {
                     passwordInput.type = 'text';
-                    // Adjust styles or add styles as needed
                     eyeIcon.style.filter = 'brightness(0.7)';
                 } else {
                     passwordInput.type = 'password';
