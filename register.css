@@ -1,0 +1,55 @@
+body {
+  background-color: #f8f9fa;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.login-form,
+.registration-form {
+  width: 100%;
+  max-width: 400px;
+  display: block;
+  margin: auto;
+}
+
+.toggle-form {
+  cursor: pointer;
+  color: #007bff;
+}
+
+.toggle-password {
+  cursor: pointer;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.modal-body img {
+  width: 76px;
+  height: auto;
+  margin: 0 auto;
+  display: block;
+  margin-bottom: 25px;
+}
+
+.modal-body{
+	text-align:center;
+}
+
+.modal-body h1{
+	font-size: 32px;
+  margin-bottom: 25px;
+	color:#5C5C5C;
+}
+
+.modal-body p{
+	font-size: 20px;
+  margin-bottom: 27px;
+ 	color:#5C5C5C;
+}
