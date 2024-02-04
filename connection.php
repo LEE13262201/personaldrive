@@ -23,7 +23,6 @@ try {
         $fileHandler->upload($_FILES['file'], $userId);
     }
 
-    // Add this line where you call getAllFilesForUser
     $files = $fileHandler->getAllFilesForUser($userId, isset($_GET['search']) ? $_GET['search'] : null);
 
     // File deletion
