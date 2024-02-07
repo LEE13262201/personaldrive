@@ -59,10 +59,11 @@ class File
         $fileInfo = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($fileInfo) {
-            // Delete file from storage
-            unlink($fileInfo['filepath']);
+            // Insert the file info into recovered_files table before deleting
+            $stmt = $this->pdo->prepare("INSERT INTO recovered_files (filename, filepath, userID) VALUES (?, ?, ?)");
+            $stmt->execute([$fileInfo['filename'], $fileInfo['filepath'], $this->userId]);
 
-            // Delete file record from database
+            // Delete the file from the files table
             $stmt = $this->pdo->prepare("DELETE FROM files WHERE id = ?");
             $stmt->execute([$fileId]);
 
@@ -144,4 +145,3 @@ class File
         return false; // File not found
     }
 }
-?>

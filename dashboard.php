@@ -62,7 +62,7 @@ if (isset($_SESSION['error'])) {
                 <input type="file" name="file" class="form-control" required>
                 <button type="submit" class="btn btn-success my-2">Upload</button>
             </form>
-            <a href="#" class="btn btn-danger" id="logoutButton">Logout</a>
+            <a href="#" class="btn" id="logoutButton"><img width="64" height="64" src="https://img.icons8.com/cotton/64/logout-rounded--v2.png" alt="logout-rounded--v2" /></a>
         </div>
     </nav>
 
@@ -170,8 +170,12 @@ if (isset($_SESSION['error'])) {
         </div>
     </div>
 
+    <div class="container">
+        <a href="recover_file.php" class="btn btn-secondary w-100">Recovered Files</a>
+    </div>
+
     <div class="container mt-5 text-center">
-        <h2>Lee's Personal Drive</h2>
+        <h2>ICTe Solutions</h2>
     </div>
 
     <div class="container mt-5 text-center">
@@ -190,7 +194,7 @@ if (isset($_SESSION['error'])) {
         // Show the logout confirmation modal when the user clicks the logout button
         $(document).ready(function() {
             $('#logoutButton').on('click', function(e) {
-                e.preventDefault(); // Prevent the default behavior of the link
+                e.preventDefault();
                 $('#logoutConfirmationModal').modal('show');
             });
         });
