@@ -2,7 +2,7 @@
 session_start();
 require_once 'connection.php';
 require_once 'File.php';
-
+$pdo = new PDO("mysql:host=localhost;dbname=personaldrive", "root", "");
 $userId = $_SESSION['user_id'];
 
 if (!isset($userId)) {
@@ -36,6 +36,12 @@ if (isset($_SESSION['error'])) {
     $error = $_SESSION['error'];
     unset($_SESSION['error']);
 }
+
+$user_id = $_SESSION['user_id'];
+$stmt = $pdo->prepare("SELECT first_name, last_name, age, course, block FROM student_information WHERE user_id = ?");
+$stmt->execute([$user_id]);
+$user_info = $stmt->fetch(PDO::FETCH_ASSOC);
+
 ?>
 
 <!doctype html>
@@ -57,14 +63,46 @@ if (isset($_SESSION['error'])) {
 <body>
 
     <nav class="navbar bg-body-tertiary">
-        <div class="container-fluid">
-            <form method="post" action="" enctype="multipart/form-data">
-                <input type="file" name="file" class="form-control" required>
-                <button type="submit" class="btn btn-success my-2">Upload</button>
-            </form>
-            <a href="#" class="btn" id="logoutButton"><img width="64" height="64" src="https://img.icons8.com/cotton/64/logout-rounded--v2.png" alt="logout-rounded--v2" /></a>
+        <div class="container-fluid d-flex justify-content-between align-items-center">
+            <div>
+                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+                    <div class="offcanvas-header">
+                        <?php
+                        if (empty($user_info)) {                       
+                            $user_name = "GC-Student";
+                        } else {
+                            $user_name = $user_info['first_name'];
+                        }
+                        ?>
+                        <h5 class="offcanvas-title mx-auto" id="offcanvasNavbarLabel"><b><?php echo $user_name; ?></b></h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body">
+                        <ul class="navbar-nav justify-content-start flex-grow-1 ps-3">
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="dashboard.php">Dashboard</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="studentProfile.php">Profile</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="recover_file.php">Recently Deleted</a>
+                            </li>
+                            <li class="nav-item">
+                                <button id="logoutButton" class="btn mt-3 mx-auto" data-bs-toggle="modal" data-bs-target="#logoutConfirmationModal"><img width="30" height="30" src="https://img.icons8.com/ios/50/exit--v1.png" alt="exit--v1" /></button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <p class="fs-1 mb-0 font-bold personalDrive">Student Personal Drive</p>
+            <p class="fs-1 mb-0"></p>
         </div>
     </nav>
+
 
     <!-- For uploading and viewing error -->
     <?php if ($error) : ?>
@@ -80,12 +118,33 @@ if (isset($_SESSION['error'])) {
         </div>
     <?php endif; ?>
 
-    <div class="container mt-3">
+    <?php
+    $user_id = $_SESSION['user_id'];
+    $stmt = $pdo->prepare("SELECT file_name FROM student_profile WHERE user_id = ? ORDER BY upload_timestamp DESC LIMIT 1");
+    $stmt->execute([$user_id]);
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    $profile_picture = ($row && isset($row['file_name'])) ? $row['file_name'] : '';
+    ?>
+    <div class="container mt-5">
         <form method="get" action="">
             <div class="input-group mb-3">
+                <!-- Circular image -->
+                <?php if (!empty($profile_picture)) : ?>
+                    <img src="<?php echo $profile_picture; ?>" alt="Profile Picture" class="rounded-circle me-2" width="70" height="70">
+                <?php else : ?>
+                    <!-- Default profile picture -->
+                    <img src="default.png" alt="Default Profile Picture" class="rounded-circle me-2" width="70" height="70">
+                <?php endif; ?>
                 <input type="text" class="form-control" placeholder="Search files..." name="search">
                 <button class="btn btn-outline-secondary" type="submit">Search</button>
             </div>
+        </form>
+    </div>
+
+    <div class="container mt-3">
+        <form method="post" action="" enctype="multipart/form-data">
+            <input type="file" name="file" class="form-control" required>
+            <button type="submit" class="btn btn-success my-2 w-100">Upload</button>
         </form>
     </div>
 
@@ -170,16 +229,8 @@ if (isset($_SESSION['error'])) {
         </div>
     </div>
 
-    <div class="container">
-        <a href="recover_file.php" class="btn btn-secondary w-100">Recovered Files</a>
-    </div>
-
     <div class="container mt-5 text-center">
         <h2>ICTe Solutions</h2>
-    </div>
-
-    <div class="container mt-5 text-center">
-        <h5><i>This doesn't support large files such as videos.</i></h5>
     </div>
 
     <script>

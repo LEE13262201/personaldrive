@@ -18,7 +18,7 @@ class File
         $filepath = 'uploads/' . $filename;
 
         // Check if file size exceeds the maximum limit (5 MB)
-        $maxFileSize = 10 * 1024 * 1024;
+        $maxFileSize = 5 * 1024 * 1024;
         if ($file['size'] > $maxFileSize) {
             $_SESSION['error_message'] = "File exceeded the maximum file size ($maxFileSize)";
             return;

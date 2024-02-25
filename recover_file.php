@@ -8,6 +8,11 @@ $pdo = new PDO("mysql:host=localhost;dbname=personaldrive", "root", "");
 $stmt = $pdo->query("SELECT * FROM recovered_files");
 $deletedFiles = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+if (!isset($userId)) {
+    header("Location: login.php");
+    exit();
+}
+
 // Handle actions (recover or permanently delete)
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['action']) && isset($_POST['file_id'])) {
@@ -43,6 +48,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 }
+
+$user_id = $_SESSION['user_id'];
+$stmt = $pdo->prepare("SELECT first_name, last_name, age, course, block FROM student_information WHERE user_id = ?");
+$stmt->execute([$user_id]);
+$user_info = $stmt->fetch(PDO::FETCH_ASSOC);
+
 ?>
 
 <!doctype html>
@@ -59,12 +70,45 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 
 <body>
+
     <nav class="navbar bg-body-tertiary">
-        <div class="container-fluid">
-            <a href="dashboard.php" class="btn btn-sm"><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="30" height="30" viewBox="0 0 24 24">
-                    <path d="M 12 2.0996094 L 1 12 L 4 12 L 4 21 L 11 21 L 11 15 L 13 15 L 13 21 L 20 21 L 20 12 L 23 12 L 12 2.0996094 z M 12 4.7910156 L 18 10.191406 L 18 11 L 18 19 L 15 19 L 15 13 L 9 13 L 9 19 L 6 19 L 6 10.191406 L 12 4.7910156 z"></path>
-                </svg></a>
-            <a href="#" class="btn" id="logoutButton"><img width="50" height="50" src="https://img.icons8.com/cotton/64/logout-rounded--v2.png" alt="logout-rounded--v2" /></a>
+        <div class="container-fluid d-flex justify-content-between align-items-center">
+            <div>
+                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+                    <div class="offcanvas-header">
+                        <?php
+                        if (empty($user_info)) {
+                            $user_name = "GC-Student";
+                        } else {
+                            $user_name = $user_info['first_name'];
+                        }
+                        ?>
+                        <h5 class="offcanvas-title mx-auto" id="offcanvasNavbarLabel"><b><?php echo $user_name; ?></b></h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body">
+                        <ul class="navbar-nav justify-content-start flex-grow-1 ps-3">
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="dashboard.php">Dashboard</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="studentProfile.php">Profile</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="recover_file.php">Recently Deleted</a>
+                            </li>
+                            <li class="nav-item">
+                                <button id="logoutButton" class="btn mt-3 mx-auto" data-bs-toggle="modal" data-bs-target="#logoutConfirmationModal"><img width="30" height="30" src="https://img.icons8.com/ios/50/exit--v1.png" alt="exit--v1" /></button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <p class="fs-1 mb-0 font-bold personalDrive" style="font-weight: 500;">Student Personal Drive</p>
+            <p class="fs-1 mb-0"></p>
         </div>
     </nav>
 
@@ -95,6 +139,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </tbody>
         </table>
     </div>
+
     <!-- Logout Confirmation Modal -->
     <div class="modal fade" tabindex="-1" role="dialog" id="logoutConfirmationModal">
         <div class="modal-dialog modal-dialog-centered text-center" role="document">
@@ -119,7 +164,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Show the logout confirmation modal when the user clicks the logout button
         $(document).ready(function() {
             $('#logoutButton').on('click', function(e) {
-                e.preventDefault(); // Prevent the default behavior of the link
+                e.preventDefault();
                 $('#logoutConfirmationModal').modal('show');
             });
         });
