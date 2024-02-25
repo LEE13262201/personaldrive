@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 25, 2024 at 05:02 AM
+-- Generation Time: Feb 25, 2024 at 05:12 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -35,6 +35,13 @@ CREATE TABLE `files` (
   `userID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `files`
+--
+
+INSERT INTO `files` (`id`, `filename`, `filepath`, `upload_date`, `userID`) VALUES
+(85, 'download.png', 'uploads/download.png', '2024-02-25', 56);
+
 -- --------------------------------------------------------
 
 --
@@ -65,6 +72,13 @@ CREATE TABLE `student_information` (
   `user_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `student_information`
+--
+
+INSERT INTO `student_information` (`student_id`, `first_name`, `last_name`, `age`, `course`, `block`, `user_id`) VALUES
+(8, 'Spongebob', 'Squarepants', 19, 'BSIT', 'C', 56);
+
 -- --------------------------------------------------------
 
 --
@@ -77,6 +91,13 @@ CREATE TABLE `student_profile` (
   `user_id` int(11) DEFAULT NULL,
   `upload_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `student_profile`
+--
+
+INSERT INTO `student_profile` (`profile_id`, `file_name`, `user_id`, `upload_timestamp`) VALUES
+(83, 'profile_images/download.png', 56, '2024-02-25 04:10:39');
 
 -- --------------------------------------------------------
 
@@ -146,7 +167,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `files`
 --
 ALTER TABLE `files`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=85;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=86;
 
 --
 -- AUTO_INCREMENT for table `recovered_files`
@@ -158,13 +179,13 @@ ALTER TABLE `recovered_files`
 -- AUTO_INCREMENT for table `student_information`
 --
 ALTER TABLE `student_information`
-  MODIFY `student_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `student_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `student_profile`
 --
 ALTER TABLE `student_profile`
-  MODIFY `profile_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
+  MODIFY `profile_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=84;
 
 --
 -- AUTO_INCREMENT for table `users`
