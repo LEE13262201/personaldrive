@@ -143,7 +143,7 @@ $user_info = $stmt->fetch(PDO::FETCH_ASSOC);
 
     <div class="container mt-3">
         <form method="post" action="" enctype="multipart/form-data">
-            <input type="file" name="file" class="form-control" required>
+            <input type="file" name="file[]" class="form-control" multiple required>
             <button type="submit" class="btn btn-success my-2 w-100">Upload</button>
         </form>
     </div>
