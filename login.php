@@ -101,7 +101,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <div class="form-group">
                             <input type="password" class="form-control" name="loginPassword" id="loginPassword" placeholder="Password" required>
                             <span class="toggle-password" onclick="togglePasswordVisibility('loginPassword')">
-                                <img width="20" height="20" src="https://img.icons8.com/fluency-systems-regular/48/visible--v1.png" alt="visible--v1" />
+                                <img width="20" height="20" style="margin-top: 110px" src="https://img.icons8.com/fluency-systems-regular/48/visible--v1.png" alt="visible--v1" />
                             </span>
                         </div>
                         <button type="submit" class="btn btn-primary w-100" name="login">Login to Personal Drive</button>
