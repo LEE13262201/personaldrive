@@ -185,19 +185,19 @@ $user_info = $stmt->fetch(PDO::FETCH_ASSOC);
                     <div class="modal-body">
                         <form method="POST" action="">
                             <div class="mb-3">
-                                <input type="text" class="form-control" id="firstName" name="first_name" placeholder="Enter First Name">
+                                <input type="text" class="form-control" id="firstName" name="first_name" placeholder="Enter First Name" required> 
                             </div>
                             <div class="mb-3">
-                                <input type="text" class="form-control" id="lastName" name="last_name" placeholder="Enter Last Name">
+                                <input type="text" class="form-control" id="lastName" name="last_name" placeholder="Enter Last Name" required>
                             </div>
                             <div class="mb-3">
-                                <input type="number" class="form-control" id="age" name="age" placeholder="Enter Age">
+                                <input type="number" class="form-control" id="age" name="age" placeholder="Enter Age" required>
                             </div>
                             <div class="mb-3">
-                                <input type="text" class="form-control" id="course" name="course" placeholder="Enter Course">
+                                <input type="text" class="form-control" id="course" name="course" placeholder="Enter Course" required>
                             </div>
                             <div class="mb-3">
-                                <input type="text" class="form-control" id="block" name="block" placeholder="Enter Block">
+                                <input type="text" class="form-control" id="block" name="block" placeholder="Enter Block" required>
                             </div>
                             <button type="submit" class="btn btn-primary w-100" name="update_student_info">Save Changes</button>
                         </form>
