@@ -12,31 +12,29 @@ class File
     }
 
     public function upload($files, $userId)
-{
-    // Loop through each uploaded file
-    foreach ($files['tmp_name'] as $key => $tmp_name) {
-        $filename = $files['name'][$key];
-        $filetmp = $tmp_name;
-        $filepath = 'uploads/' . $filename;
+    {
+        foreach ($files['tmp_name'] as $key => $tmp_name) {
+            $filename = $files['name'][$key];
+            $filetmp = $tmp_name;
+            $filepath = 'uploads/' . $filename;
 
-        // Check if file size exceeds the maximum limit (10 MB)
-        $maxFileSize = 10 * 1024 * 1024;
-        if ($files['size'][$key] > $maxFileSize) {
-            $_SESSION['error_message'] = "File '$filename' exceeded the maximum file size ($maxFileSize)";
-            continue; // Skip this file and move to the next one
+            // Check if file size exceeds the maximum limit (10 MB)
+            $maxFileSize = 10 * 1024 * 1024;
+            if ($files['size'][$key] > $maxFileSize) {
+                $_SESSION['error_message'] = "File '$filename' exceeded the maximum file size ($maxFileSize)";
+                continue;
+            }
+
+            move_uploaded_file($filetmp, $filepath);
+
+            $stmt = $this->pdo->prepare("INSERT INTO files (filename, filepath, upload_date, userID) VALUES (?, ?, NOW(), ?)");
+            $stmt->execute([$filename, $filepath, $userId]);
         }
 
-        move_uploaded_file($filetmp, $filepath);
-
-        $stmt = $this->pdo->prepare("INSERT INTO files (filename, filepath, upload_date, userID) VALUES (?, ?, NOW(), ?)");
-        $stmt->execute([$filename, $filepath, $userId]);
+        $_SESSION['success_message'] = "Files uploaded successfully.";
+        header("Location: {$_SERVER['PHP_SELF']}");
+        exit();
     }
-
-    $_SESSION['success_message'] = "Files uploaded successfully.";
-    // Redirect to the same page after successful upload
-    header("Location: {$_SERVER['PHP_SELF']}");
-    exit();
-}
 
     public function getAllFilesForUser($userId, $search = null)
     {
@@ -62,15 +60,12 @@ class File
         $fileInfo = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($fileInfo) {
-            // Insert the file info into recovered_files table before deleting
             $stmt = $this->pdo->prepare("INSERT INTO recovered_files (filename, filepath, userID) VALUES (?, ?, ?)");
             $stmt->execute([$fileInfo['filename'], $fileInfo['filepath'], $this->userId]);
 
-            // Delete the file from the files table
             $stmt = $this->pdo->prepare("DELETE FROM files WHERE id = ?");
             $stmt->execute([$fileId]);
 
-            // Redirect to the same page after successful deletion
             header("Location: {$_SERVER['PHP_SELF']}");
             exit();
         }
