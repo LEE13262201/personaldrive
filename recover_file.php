@@ -114,7 +114,8 @@ $user_info = $stmt->fetch(PDO::FETCH_ASSOC);
 
     <div class="container mt-5">
         <h2 class="text-danger">Recovered Files:</h2>
-        <table class="table text-center mt-3 table-bordered table-striped table-hover">
+        <hr>
+        <table class="table text-center mt-3 table-hover">
             <thead class="thead-dark">
                 <tr>
                     <th scope="col">Filename</th>

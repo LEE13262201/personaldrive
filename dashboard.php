@@ -99,7 +99,7 @@ $user_info = $stmt->fetch(PDO::FETCH_ASSOC);
                 </div>
             </div>
             <p class="fs-1 mb-0 font-bold personalDrive">Student Personal Drive</p>
-            <p class="fs-1 mb-0">ICTe Solutions</p>
+            <p class="fs-1 mb-0"></p>
         </div>
     </nav>
 
@@ -152,7 +152,7 @@ $user_info = $stmt->fetch(PDO::FETCH_ASSOC);
     <div class="container mt-5">
         <h2 class="text-success">Uploaded Files:</h2>
         <hr>
-        <table class="table text-center mt-3 table-striped table-hover">
+        <table class="table text-center mt-3 table-hover">
             <thead class="thead-dark">
                 <tr>
                     <th scope="col">Filename</th>
