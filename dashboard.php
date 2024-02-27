@@ -71,7 +71,7 @@ $user_info = $stmt->fetch(PDO::FETCH_ASSOC);
                 <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
                     <div class="offcanvas-header">
                         <?php
-                        if (empty($user_info)) {                       
+                        if (empty($user_info)) {
                             $user_name = "GC-Student";
                         } else {
                             $user_name = $user_info['first_name'];
@@ -162,7 +162,40 @@ $user_info = $stmt->fetch(PDO::FETCH_ASSOC);
             <tbody>
                 <?php foreach ($files as $file) : ?>
                     <tr>
-                        <td><?php echo htmlentities($file['filename'], ENT_QUOTES, 'UTF-8'); ?></td>
+                        <td>
+                            <?php
+                            $extension = pathinfo($file['filename'], PATHINFO_EXTENSION);
+                            switch (strtolower($extension)) {
+                                case 'pdf':
+                                    echo '<img width="35" height="35" src="https://img.icons8.com/papercut/60/pdf.png" alt="pdf"/>';
+                                    break;
+                                case 'jpg':
+                                    echo '<img width="35" height="35" src="https://img.icons8.com/fluency/48/image--v1.png" alt="image--v1"/>';
+                                    break;
+                                case 'jpeg':
+                                    echo '<img width="35" height="35" src="https://img.icons8.com/fluency/48/image--v1.png" alt="image--v1"/>';
+                                    break;
+                                case 'png':
+                                    echo '<img width="35" height="35" src="https://img.icons8.com/fluency/48/image--v1.png" alt="image--v1"/>';
+                                    break;
+                                case 'docx':
+                                    echo '<img width="35" height="35" src="https://img.icons8.com/color/48/word.png" alt="word"/>';
+                                    break;
+                                case 'ppt':
+                                    echo '<img width="35" height="35" src="https://img.icons8.com/color/48/ppt.png" alt="ppt"/>';
+                                    break;
+                                case 'mp3':
+                                    echo '<img width="35" height="35" src="https://img.icons8.com/color/48/mp3.png" alt="mp3"/>';
+                                    break;
+                                case 'wav':
+                                    echo '<img width="35" height="35" src="https://img.icons8.com/color/48/wav.png" alt="wav"/>';
+                                    break;
+                                default:
+                                    echo '<img src="generic_icon.png" alt="File" width="24" height="24">';
+                            }
+                            ?>
+                            <?php echo htmlentities($file['filename'], ENT_QUOTES, 'UTF-8'); ?>
+                        </td>
                         <td><?php echo $file['upload_date']; ?></td>
                         <td>
                             <a href="?action=download&file_id=<?php echo $file['id']; ?>" class="btn btn-sm"><img width="22" height="22" src="https://img.icons8.com/windows/32/download--v1.png" alt="download--v1" /></a>

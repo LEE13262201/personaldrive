@@ -125,13 +125,47 @@ $user_info = $stmt->fetch(PDO::FETCH_ASSOC);
             <tbody>
                 <?php foreach ($deletedFiles as $file) : ?>
                     <tr>
-                        <td><?php echo htmlentities($file['filename'], ENT_QUOTES, 'UTF-8'); ?></td>
+                        <td>
+                            <?php
+                            $extension = pathinfo($file['filename'], PATHINFO_EXTENSION);
+                            switch (strtolower($extension)) {
+                                case 'pdf':
+                                    echo '<img width="35" height="35" src="https://img.icons8.com/papercut/60/pdf.png" alt="pdf"/>';
+                                    break;
+                                case 'jpg':
+                                    echo '<img width="35" height="35" src="https://img.icons8.com/fluency/48/image--v1.png" alt="image--v1"/>';
+                                    break;
+                                case 'jpeg':
+                                    echo '<img width="35" height="35" src="https://img.icons8.com/fluency/48/image--v1.png" alt="image--v1"/>';
+                                    break;
+                                case 'png':
+                                    echo '<img width="35" height="35" src="https://img.icons8.com/fluency/48/image--v1.png" alt="image--v1"/>';
+                                    break;
+                                case 'docx':
+                                    echo '<img width="35" height="35" src="https://img.icons8.com/color/48/word.png" alt="word"/>';
+                                    break;
+                                case 'ppt':
+                                    echo '<img width="35" height="35" src="https://img.icons8.com/color/48/ppt.png" alt="ppt"/>';
+                                    break;
+                                case 'mp3':
+                                    echo '<img width="35" height="35" src="https://img.icons8.com/color/48/mp3.png" alt="mp3"/>';
+                                    break;
+                                case 'wav':
+                                    echo '<img width="35" height="35" src="https://img.icons8.com/color/48/wav.png" alt="wav"/>';
+                                    break;
+                                default:
+                                    echo '<img src="generic_icon.png" alt="File" width="24" height="24">';
+                            }
+                            ?>
+                            <?php echo htmlentities($file['filename'], ENT_QUOTES, 'UTF-8'); ?></td>
                         <td><?php echo $file['deleted_at']; ?></td>
                         <td>
                             <form method="post" action="">
                                 <input type="hidden" name="file_id" value="<?php echo $file['id']; ?>">
-                                <button type="submit" class="btn btn-success" name="action" value="recover">Recover</button>
-                                <button type="submit" class="btn btn-danger" name="action" value="delete_permanently">Delete Permanently</button>
+                                <button type="submit" class="btn" name="action" value="recover"><img width="27" height="27" src="https://img.icons8.com/ios/50/restore-page.png" alt="restore-page"/></button>
+                                <button type="submit" class="btn" onclick="return confirm('Deleting permanently will make the file disappear forever.')" name="action" value="delete_permanently"><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="22" height="22" viewBox="0 0 50 50">
+                                    <path d="M 7.71875 6.28125 L 6.28125 7.71875 L 23.5625 25 L 6.28125 42.28125 L 7.71875 43.71875 L 25 26.4375 L 42.28125 43.71875 L 43.71875 42.28125 L 26.4375 25 L 43.71875 7.71875 L 42.28125 6.28125 L 25 23.5625 Z"></path>
+                                </svg></button>
                             </form>
                         </td>
                     </tr>
