@@ -56,10 +56,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Personal Drive</title>
     <link rel="icon" href="logo.png" type="image/png">
     <style>
-        body {
-            background-color: #f8f9fa;
-        }
-
         .container {
             display: flex;
             justify-content: center;
@@ -81,6 +77,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             right: 30px;
             top: 50%;
             transform: translateY(-50%);
+        }
+        .card{
+            border: none;
         }
     </style>
 </head>

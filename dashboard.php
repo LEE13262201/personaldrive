@@ -80,17 +80,23 @@ $user_info = $stmt->fetch(PDO::FETCH_ASSOC);
                         <h5 class="offcanvas-title mx-auto" id="offcanvasNavbarLabel"><b><?php echo $user_name; ?></b></h5>
                         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                     </div>
+                    <hr class="hr">
                     <div class="offcanvas-body">
                         <ul class="navbar-nav justify-content-start flex-grow-1 ps-3">
                             <li class="nav-item">
-                                <a class="nav-link" aria-current="page" href="dashboard.php">Dashboard</a>
+                                <a class="nav-link" aria-current="page" href="dashboard.php"><img width="25" height="25" src="https://img.icons8.com/fluency-systems-filled/48/dashboard-layout.png" alt="dashboard-layout" /> Dashboard</a>
                             </li>
+                            <hr>
                             <li class="nav-item">
-                                <a class="nav-link" href="studentProfile.php">Profile</a>
+                                <a class="nav-link" href="studentProfile.php"><img width="25" height="25" src="https://img.icons8.com/ios-filled/50/gender-neutral-user.png" alt="gender-neutral-user" />Profile</a>
                             </li>
+                            <hr>
                             <li class="nav-item">
-                                <a class="nav-link" href="recover_file.php">Recently Deleted</a>
+                                <a class="nav-link" href="recover_file.php"><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="25" height="25" viewBox="0 0 30 30">
+                                        <path d="M 13 3 A 1.0001 1.0001 0 0 0 11.986328 4 L 6 4 A 1.0001 1.0001 0 1 0 6 6 L 24 6 A 1.0001 1.0001 0 1 0 24 4 L 18.013672 4 A 1.0001 1.0001 0 0 0 17 3 L 13 3 z M 6 8 L 6 24 C 6 25.105 6.895 26 8 26 L 22 26 C 23.105 26 24 25.105 24 24 L 24 8 L 6 8 z"></path>
+                                    </svg>Recently Deleted</a>
                             </li>
+                            <hr>
                             <li class="nav-item">
                                 <button id="logoutButton" class="btn mt-3 mx-auto" data-bs-toggle="modal" data-bs-target="#logoutConfirmationModal"><img width="30" height="30" src="https://img.icons8.com/ios/50/exit--v1.png" alt="exit--v1" /></button>
                             </li>

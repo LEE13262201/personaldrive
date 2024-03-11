@@ -6,3 +6,10 @@
     font-weight: 500;
 }
 
+.hr {
+    border: none;
+    height: 3px;
+    background-color: #000;
+    margin: 20px 0;
+}
+
